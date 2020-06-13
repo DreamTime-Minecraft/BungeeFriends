@@ -1,0 +1,4 @@
+name: BungeeFriends
+version: ${project.version}
+main: ru.buseso.dreamtime.bungeefriends.BungeeFriends
+description: Simple BungeeFriends
