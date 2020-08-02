@@ -10,6 +10,7 @@ import net.md_5.bungee.config.Configuration;
 import ru.buseso.dreamtime.bungeefriends.party.Party;
 import ru.buseso.dreamtime.bungeefriends.party.PartyManager;
 import ru.buseso.dreamtime.bungeefriends.party.PartyRank;
+import ru.buseso.dreamtime.bungeefriends.party.Requests;
 import ru.buseso.dreamtime.bungeefriends.sql.SettingsManager;
 import ru.buseso.dreamtime.bungeefriends.utils.FileUtils;
 import ru.buseso.dreamtime.bungeefriends.utils.PartyMessageUtils;
@@ -66,8 +67,8 @@ public class PartyCommand extends Command {
 
                     if (args[0].equalsIgnoreCase("accept")) {
                         if (t != null) {
-                            if (PartyManager.isRequestOpen(t, p)) {
-                                PartyManager.requests.remove(t);
+                            if(PartyManager.isReqOpen(t, p)) {
+                                PartyManager.reqRemove(t);
 
                                 PartyManager.getPlayerParty(t).addMember(p);
 
@@ -84,8 +85,8 @@ public class PartyCommand extends Command {
                         }
                     } else if (args[0].equalsIgnoreCase("deny")) {
                         if (t != null) {
-                            if (PartyManager.isRequestOpen(t, p)) {
-                                PartyManager.requests.remove(t);
+                            if (PartyManager.isReqOpen(t, p)) {
+                                PartyManager.reqRemove(t);
 
                                 p.sendMessage(Utils.getAsBaseComponent(String.valueOf(PartyMessageUtils.prefix) + cfg.getString("Messages.Party.Denied")));
                                 t.sendMessage(Utils.getAsBaseComponent(String.valueOf(PartyMessageUtils.prefix) + cfg.getString("Messages.Party.RequestDenied").replace("%player%", p.getDisplayName())));
@@ -162,9 +163,13 @@ public class PartyCommand extends Command {
                         if (t != null) {
                             if (t != p) {
                                 if (!PartyManager.isInParty(t)) {
-                                    if (!PartyManager.requests.containsKey(p)) {
+                                    if (!PartyManager.contains(t)) {
                                         if (SettingsManager.isGettigPartyInvites(t.getName())) {
-                                            PartyManager.requests.put(p, t);
+                                            Requests req = new Requests();
+                                            req.invite = t;
+                                            req.leader = p;
+                                            req.time = System.currentTimeMillis();
+                                            PartyManager.req.add(req);
 
                                             PartyManager.parties.add(new Party(p));
 
@@ -205,8 +210,12 @@ public class PartyCommand extends Command {
                             if (t != p) {
                                 if ((PartyManager.getPlayerParty(p)).members.get(p) == PartyRank.MOD || (PartyManager.getPlayerParty(p)).members.get(p) == PartyRank.LEADER) {
                                     if (!PartyManager.isInParty(t)) {
-                                        if (!PartyManager.requests.containsKey(p)) {
-                                            PartyManager.requests.put(p, t);
+                                        if (!PartyManager.contains(p)) {
+                                            Requests req = new Requests();
+                                            req.leader = p;
+                                            req.invite = t;
+                                            req.time = System.currentTimeMillis();
+                                            PartyManager.req.add(req);
 
                                             p.sendMessage(Utils.getAsBaseComponent(String.valueOf(PartyMessageUtils.prefix) + cfg.getString("Messages.Party.Invited").replace("%player%", args[1])));
 

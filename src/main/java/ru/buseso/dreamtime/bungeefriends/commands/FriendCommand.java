@@ -38,6 +38,7 @@ public class FriendCommand extends Command {
                     }
                 } else if (args[0].equalsIgnoreCase("requests")) {
                     if (FriendManager.getRequests(p.getName()).size() >= 1) {
+                        p.sendMessage(Utils.getAsBaseComponent(FriendMessageUtils.prefix + "§2Все Ваши запросы в друзья:"));
                         for (String uuid : FriendManager.getRequests(p.getName())) {
                             p.sendMessage(Utils.getAsBaseComponent(String.valueOf(FriendMessageUtils.prefix) + "§e" + uuid));
                         }

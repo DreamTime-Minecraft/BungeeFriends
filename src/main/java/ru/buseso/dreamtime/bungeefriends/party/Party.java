@@ -58,6 +58,9 @@ public class Party {
 
             p.sendMessage(Utils.getAsBaseComponent(String.valueOf(PartyMessageUtils.prefix) + cfg.getString("Messages.Party.Deleted")));
             PartyManager.parties.remove(this);
+        } else if(members.size() == 1) {
+            p.sendMessage(Utils.getAsBaseComponent(String.valueOf(PartyMessageUtils.prefix) + cfg.getString("Messages.Party.Deleted")));
+            PartyManager.parties.remove(this);
         }
     }
 

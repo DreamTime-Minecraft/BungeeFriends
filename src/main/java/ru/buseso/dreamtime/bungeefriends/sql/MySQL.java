@@ -46,7 +46,7 @@ public class MySQL {
         }
     }
 
-    public void update(String qry) {
+    public synchronized void update(String qry) {
         if (isConnected()) {
             (new FutureTask(new Runnable() {
                 PreparedStatement ps;
@@ -67,7 +67,7 @@ public class MySQL {
         }
     }
 
-    public void updateWithBoolean(String qry, boolean value) {
+    public synchronized void updateWithBoolean(String qry, boolean value) {
         if (isConnected()) {
             (new FutureTask(new Runnable() {
                 PreparedStatement ps;
@@ -89,7 +89,7 @@ public class MySQL {
         }
     }
 
-    public ResultSet getResult(String qry) {
+    public synchronized ResultSet getResult(String qry) {
         if (isConnected()) {
             try {
                 FutureTask<ResultSet> task = new FutureTask<ResultSet>(new Callable<ResultSet>() {

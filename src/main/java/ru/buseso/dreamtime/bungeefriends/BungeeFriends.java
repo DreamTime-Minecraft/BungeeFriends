@@ -13,6 +13,7 @@ import ru.buseso.dreamtime.bungeefriends.listeners.FriendListener;
 import ru.buseso.dreamtime.bungeefriends.listeners.PartyListener;
 import ru.buseso.dreamtime.bungeefriends.sql.MySQL;
 import ru.buseso.dreamtime.bungeefriends.utils.FileUtils;
+import ru.buseso.dreamtime.bungeefriends.utils.RequestDeleter;
 import ru.buseso.dreamtime.bungeefriends.utils.Utils;
 
 public final class BungeeFriends extends Plugin {
@@ -46,6 +47,8 @@ public final class BungeeFriends extends Plugin {
             pm.registerCommand(this, new PartyManagerCommand("pman"));
 
             pm.registerListener(this, new PartyListener());
+
+            RequestDeleter.start();
         }
 
         pm.registerListener(this, new ChannelListener());

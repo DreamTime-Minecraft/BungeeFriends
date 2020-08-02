@@ -101,8 +101,6 @@ public class FileUtils {
         addDefault(cfg, "Messages.Friend.Help.Line14", "&7/friend accept [player] &8- &eAccept a friend request");
         addDefault(cfg, "Messages.Friend.Help.Line15", "&7/friend deny [player] &8- &eDeny a friend request");
         addDefault(cfg, "Messages.Friend.Help.Line16", "&7/friend jump [player] &8- &eJump to a friend");
-        addDefault(cfg, "Messages.Friend.Help.Line17", "&7/msg [player] [message] &8- &eWrite a message to a friend");
-        addDefault(cfg, "Messages.Friend.Help.Line18", "&7/r [message] &8- &eReply to a message");
 
         addDefault(cfg, "Messages.Party.Prefix", "&7[&5Party&7] &7");
         addDefault(cfg, "Messages.Party.NotPlayer", "&7Nur Spieler k?nnen diesen Befehl ausf?hren");
