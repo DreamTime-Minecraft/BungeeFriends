@@ -67,7 +67,7 @@ public class PartyCommand extends Command {
 
                     if (args[0].equalsIgnoreCase("accept")) {
                         if (t != null) {
-                            if(PartyManager.isReqOpen(t, p)) {
+                            if(PartyManager.isReqOpen(p, t)) {
                                 PartyManager.reqRemove(t);
 
                                 Party party = PartyManager.getPlayerParty(t);
@@ -195,52 +195,13 @@ public class PartyCommand extends Command {
                                             t.sendMessage(Utils.getAsBaseComponent(String.valueOf(PartyMessageUtils.prefix) + cfg.getString("Messages.Party.PlayerInvite").replace("%player%", p.getDisplayName())));
                                             t.sendMessage(message);
                                         } else {
-                                            p.sendMessage(Utils.getAsBaseComponent(String.valueOf(PartyMessageUtils.prefix) + cfg.getString("Messages.Party.NotAllowingInvites")));
+                                            p.sendMessage(Utils.getAsBaseComponent(String.valueOf(PartyMessageUtils.prefix) + cfg.getString("Messages.Party.NotAllowingInvites").replace("%player%", t.getName())));
                                         }
                                     } else {
                                         p.sendMessage(Utils.getAsBaseComponent(String.valueOf(PartyMessageUtils.prefix) + cfg.getString("Messages.Party.AlreadySentARequest")));
                                     }
                                 } else {
                                     p.sendMessage(Utils.getAsBaseComponent(String.valueOf(PartyMessageUtils.prefix) + cfg.getString("Messages.Party.AlreadyInParty").replace("%player%", t.getDisplayName())));
-                                }
-                            } else {
-                                p.sendMessage(Utils.getAsBaseComponent(String.valueOf(PartyMessageUtils.prefix) + cfg.getString("Messages.Party.CantInteractSelf")));
-                            }
-                        } else {
-                            p.sendMessage(Utils.getAsBaseComponent(String.valueOf(PartyMessageUtils.prefix) + cfg.getString("Messages.Party.PlayerNotFound").replace("%player%", args[1])));
-                        }
-                    } else if (PartyManager.isInParty(p) &&
-                            (args[0].equalsIgnoreCase("invite") || args[0].equalsIgnoreCase("i"))) {
-                        if (t != null) {
-                            if (t != p) {
-                                if ((PartyManager.getPlayerParty(p)).members.get(p) == PartyRank.MOD || (PartyManager.getPlayerParty(p)).members.get(p) == PartyRank.LEADER) {
-                                    if (!PartyManager.isInParty(t)) {
-                                        if (!PartyManager.contains(p)) {
-                                            Requests req = new Requests();
-                                            req.leader = p;
-                                            req.invite = t;
-                                            req.time = System.currentTimeMillis();
-                                            PartyManager.req.add(req);
-
-                                            p.sendMessage(Utils.getAsBaseComponent(String.valueOf(PartyMessageUtils.prefix) + cfg.getString("Messages.Party.Invited").replace("%player%", args[1])));
-
-                                            TextComponent accept = new TextComponent(String.valueOf(PartyMessageUtils.prefix) + "§aПРИНЯТЬ");
-                                            accept.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/party accept " + p.getName()));
-
-                                            TextComponent deny = new TextComponent(String.valueOf(PartyMessageUtils.prefix) + "§cОТКЛОНИТЬ");
-                                            deny.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/party deny " + p.getName()));
-
-                                            t.sendMessage(Utils.getAsBaseComponent(String.valueOf(PartyMessageUtils.prefix) + cfg.getString("Messages.Party.PlayerInvite").replace("%player%", p.getDisplayName())));
-                                            t.sendMessage(accept);
-                                            t.sendMessage(deny);
-                                        } else {
-                                            p.sendMessage(Utils.getAsBaseComponent(String.valueOf(PartyMessageUtils.prefix) + cfg.getString("Messages.Party.AlreadySentARequest")));
-                                        }
-                                    } else {
-                                        p.sendMessage(Utils.getAsBaseComponent(String.valueOf(PartyMessageUtils.prefix) + cfg.getString("Messages.Party.AlreadyInParty").replace("%player%", t.getDisplayName())));
-                                    }
-                                } else {
-                                    p.sendMessage(Utils.getAsBaseComponent(String.valueOf(PartyMessageUtils.prefix) + cfg.getString("Messages.Party.NotLeader")));
                                 }
                             } else {
                                 p.sendMessage(Utils.getAsBaseComponent(String.valueOf(PartyMessageUtils.prefix) + cfg.getString("Messages.Party.CantInteractSelf")));

@@ -29,7 +29,6 @@ public class MySQL {
             this.con = DriverManager.getConnection(
                     "jdbc:mysql://" + this.host + ":" + this.port + "/" + this.database + "" +
                             "?autoReconnect=true", this.user, this.password);
-            System.out.println("[MySQL] Connected to database");
         } catch (SQLException ex) {
             ex.printStackTrace();
             System.out.println("[MySQL] Could not connect");
