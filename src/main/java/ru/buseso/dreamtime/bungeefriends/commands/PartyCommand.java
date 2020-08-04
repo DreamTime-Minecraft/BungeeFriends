@@ -70,12 +70,17 @@ public class PartyCommand extends Command {
                             if(PartyManager.isReqOpen(t, p)) {
                                 PartyManager.reqRemove(t);
 
-                                PartyManager.getPlayerParty(t).addMember(p);
+                                Party party = PartyManager.getPlayerParty(t);
 
-                                p.sendMessage(Utils.getAsBaseComponent(String.valueOf(PartyMessageUtils.prefix) + cfg.getString("Messages.Party.Accepted")));
+                                if(party == null) {
+                                    p.sendMessage(Utils.getAsBaseComponent(PartyMessageUtils.prefix + "§7Пати §cне найдено§7!"));
+                                } else {
+                                    party.addMember(p);
+                                    p.sendMessage(Utils.getAsBaseComponent(String.valueOf(PartyMessageUtils.prefix) + cfg.getString("Messages.Party.Accepted")));
 
-                                for (ProxiedPlayer member : PartyManager.getPlayerParty(p).getMembers()) {
-                                    member.sendMessage(Utils.getAsBaseComponent(String.valueOf(PartyMessageUtils.prefix) + cfg.getString("Messages.Party.Joined").replace("%player%", p.getDisplayName())));
+                                    for (ProxiedPlayer member : party.getMembers()) {
+                                        member.sendMessage(Utils.getAsBaseComponent(String.valueOf(PartyMessageUtils.prefix) + cfg.getString("Messages.Party.Joined").replace("%player%", p.getDisplayName())));
+                                    }
                                 }
                             } else {
                                 p.sendMessage(Utils.getAsBaseComponent(String.valueOf(PartyMessageUtils.prefix) + cfg.getString("Messages.Party.NoRequestSent").replace("%player%", t.getDisplayName())));
